@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulador Diagnóstico Psicológico - Plataforma Profesional</title>
+  
+  <!-- Font Awesome for professional medical icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts for professional typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Professional Medical Color Palette */
+      --primary-blue: #1e40af;
+      --secondary-blue: #3b82f6;
+      --light-blue: #dbeafe;
+      --accent-blue: #60a5fa;
+      
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      
+      --success: #059669;
+      --success-bg: #d1fae5;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      
+      --white: #ffffff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, var(--gray-50) 0%, var(--light-blue) 100%);
+      color: var(--gray-900);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      background: var(--white);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-200);
+    }
+
+    .header-icon {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      font-weight: 400;
+    }
+
+    /* Card Styles */
+    .card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--gray-100);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 0;
+    }
+
+    /* Case Display Styles */
+    .case-content {
+      background: var(--gray-50);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary-blue);
+    }
+
+    .patient-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: var(--white);
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+    }
+
+    .info-icon {
+      color: var(--secondary-blue);
+      font-size: 1rem;
+    }
+
+    .info-label {
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    .info-value {
+      color: var(--gray-600);
+    }
+
+    .case-description {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      margin-bottom: 1.5rem;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .symptom-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: var(--gray-700);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--gray-900);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--secondary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Button Styles */
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--gray-700);
+      border: 2px solid var(--gray-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-50);
+      border-color: var(--gray-300);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+
+    /* Result Styles */
+    .result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 4px solid;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .result.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .result.incorrect {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .result.partial {
+      background: var(--warning-bg);
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    .result-icon {
+      font-size: 1.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .result-content h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback {
+      background: var(--white);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+
+    /* Controls Panel */
+    .controls-panel {
+      background: var(--gray-50);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .difficulty-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--gray-300);
+      background: var(--white);
+      color: var(--gray-600);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .difficulty-btn.active {
+      border-color: var(--secondary-blue);
+      background: var(--secondary-blue);
+      color: var(--white);
+    }
+
+    /* History Table */
+    .history-section {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--gray-50);
+      color: var(--gray-700);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background: var(--gray-50);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-correct {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-incorrect {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .status-partial {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      background: linear-gradient(135deg, #fef3c7, #fed7aa);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .disclaimer-icon {
+      font-size: 1.5rem;
+      color: #f59e0b;
+    }
+
+    /* Loading States */
+    .loading {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-500);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--gray-300);
+      border-top: 2px solid var(--secondary-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      header {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .patient-info {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+
+      .difficulty-selector {
+        flex-wrap: wrap;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      tr {
+        border: 1px solid var(--gray-200);
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        padding: 1rem;
+        background: var(--white);
+      }
+
+      td {
+        border: none;
+        position: relative;
+        padding: 0.5rem 0;
+        padding-left: 40%;
+      }
+
+      td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 35%;
+        font-weight: 600;
+        color: var(--gray-700);
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+      }
+      
+      .card {
+        box-shadow: none;
+        border: 1px solid var(--gray-300);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-icon">
+        <i class="fas fa-brain"></i>
+      </div>
+      <h1>Simulador Diagnóstico Psicológico</h1>
+      <p class="subtitle">Plataforma profesional para práctica diagnóstica basada en criterios DSM-5</p>
+    </header>
+
+  
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="card-header">
+        <div class="card-icon">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <h3 class="card-title">Configuración de Caso</h3>
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <i class="fas fa-layer-group"></i>
+          Nivel de Dificultad
+        </label>
+        <div class="difficulty-selector">
+          <button class="difficulty-btn active" data-level="beginner">
+            <i class="fas fa-star"></i> Principiante
+          </button>
+          <button class="difficulty-btn" data-level="intermediate">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i> Intermedio
+          </button>
+          <button class="difficulty-btn" data-level="advanced">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Avanzado
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-filter"></i>
+          Categoría Diagnóstica
+        </label>
+        <select id="categoryFilter">
+          <option value="all">Todas las categorías</option>
+          <option value="mood">Trastornos del Estado de Ánimo</option>
+          <option value="anxiety">Trastornos de Ansiedad</option>
+          <option value="psychotic">Trastornos Psicóticos</option>
+          <option value="personality">Trastornos de Personalidad</option>
+          <option value="substance">Trastornos por Uso de Sustancias</option>
+          <option value="eating">Trastornos de la Conducta Alimentaria</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Case Display Card -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <i class="fas fa-user-md"></i>
+        </div>
+        <h2 class="card-title">Caso Clínico Actual</h2>
+      </div>
+
+      <div id="caseContent">
+        <div class="loading">
+          <div class="spinner"></div>
+          Generando caso clínico...
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="diagnosisInput">
+          <i class="fas fa-stethoscope"></i>
+          Diagnóstico Principal
+        </label>
+        <div class="input-container">
+          <input type="text" id="diagnosisInput" placeholder="Ej: Trastorno Depresivo Mayor (F32.9)">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reasoningInput">
+          <i class="fas fa-clipboard-list"></i>
+          Justificación Diagnóstica
+        </label>
+        <textarea id="reasoningInput" placeholder="Explique su razonamiento diagnóstico, criterios aplicados y diagnósticos diferenciales considerados..."></textarea>
+      </div>
+
+      <div class="button-group">
+        <button class="btn btn-primary" id="evaluateBtn">
+          <i class="fas fa-check-circle"></i>
+          Evaluar Diagnóstico
+        </button>
+        <button class="btn btn-secondary" id="newCaseBtn">
+          <i class="fas fa-refresh"></i>
+          Nuevo Caso
+        </button>
+        <button class="btn btn-secondary" id="exportBtn">
+          <i class="fas fa-download"></i>
+          Exportar Historial
+        </button>
+      </div>
+
+      <div id="resultArea"></div>
+    </div>
+
+    <!-- History Section -->
+    <div class="history-section">
+      <div class="card-header" style="padding: 1.5rem; margin-bottom: 0;">
+        <div class="card-icon">
+          <i class="fas fa-history"></i>
+        </div>
+        <h3 class="card-title">Historial de Casos</h3>
+      </div>
+      
+      <div class="table-container">
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Paciente</th>
+              <th>Edad</th>
+              <th>Dificultad</th>
+              <th>Categoría</th>
+              <th>Diagnóstico Ingresado</th>
+              <th>Resultado</th>
+              <th>Puntuación</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- History entries will be populated here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Professional Psychology Case Database
+    const caseDatabase = {
+      beginner: {
+        mood: [
+          {
+            id: 'MDD_001',
+            category: 'mood',
+            patient: {
+              name: 'María González',
+              age: 28,
+              gender: 'Femenino',
+              occupation: 'Profesora de primaria',
+              maritalStatus: 'Soltera'
+            },
+            background: 'Paciente de 28 años que acude a consulta por primera vez derivada por su médico de cabecera. Refiere sentirse "muy triste y sin energía" desde hace aproximadamente 3 meses, coincidiendo con el final de una relación sentimental de 2 años.',
+            presentingConcerns: [
+              'Estado de ánimo deprimido la mayor parte del día, casi todos los días',
+              'Pérdida marcada de interés en actividades que antes disfrutaba',
+              'Fatiga significativa y pérdida de energía',
+              'Insomnio de conciliación y mantenimiento',
+              'Sentimientos de inutilidad y culpa excesiva',
+              'Dificultades de concentración en el trabajo',
+              'Pérdida de apetito con disminución de 4 kg en 2 meses'
+            ],
+            symptoms: [
+              'tristeza persistente', 'anhedonia', 'fatiga', 'insomnio', 
+              'sentimientos de culpa', 'dificultades de concentración', 'pérdida de apetito'
+            ],
+            psychosocialFactors: [
+              'Ruptura sentimental reciente',
+              'Estrés laboral aumentado',
+              'Aislamiento social progresivo',
+              'Historia familiar de depresión (madre)'
+            ],
+            correctDiagnosis: 'Trastorno Depresivo Mayor',
+            dsm5Code: 'F32.9',
+            feedback: 'Correcto. La paciente presenta 7 de los 9 criterios del DSM-5 para Episodio Depresivo Mayor: estado de ánimo deprimido, anhedonia, pérdida de peso, insomnio, fatiga, sentimientos de inutilidad y dificultades de concentración. Los síntomas han persistido por más de 2 semanas y causan deterioro funcional significativo.',
+            differentialDiagnosis: [
+              'Trastorno de Adaptación con Estado de Ánimo Deprimido',
+              'Trastorno Bipolar (descartar episodios maníacos/hipomaníacos previos)',
+              'Trastorno Depresivo debido a otra condición médica'
+            ]
+          }
+        ],
+        anxiety: [
+          {
+            id: 'GAD_001',
+            category: 'anxiety',
+            patient: {
+              name: 'Carlos Rodríguez',
+              age: 35,
+              gender: 'Masculino',
+              occupation: 'Contador',
+              maritalStatus: 'Casado'
+            },
+            background: 'Paciente de 35 años, casado, padre de dos hijos, que trabaja como contador en una empresa mediana. Acude a consulta por recomendación de su esposa debido a preocupaciones excesivas que han aumentado significativamente en los últimos 8 meses.',
+            presentingConcerns: [
+              'Preocupación excesiva y persistente sobre múltiples aspectos de la vida',
+              'Dificultad para controlar las preocupaciones',
+              'Inquietud y sensación de estar "al límite"',
+              'Tensión muscular, especialmente en cuello y hombros',
+              'Fatiga debido a la preocupación constante',
+              'Dificultades para concentrarse en el trabajo',
+              'Trastornos del sueño por pensamientos intrusivos'
+            ],
+            symptoms: [
+              'preocupación excesiva', 'inquietud', 'tensión muscular', 'fatiga',
+              'dificultades de concentración', 'irritabilidad', 'trastornos del sueño'
+            ],
+            psychosocialFactors: [
+              'Presión laboral aumentada',
+              'Responsabilidades familiares',
+              'Preocupación por la economía familiar',
+              'Perfeccionismo y necesidad de control'
+            ],
+            correctDiagnosis: 'Trastorno de Ansiedad Generalizada',
+            dsm5Code: 'F41.1',
+            feedback: 'Correcto. El paciente presenta los criterios del DSM-5 para TAG: preocupación excesiva y ansiedad sobre múltiples eventos durante más de 6 meses, dificultad para controlar la preocupación, y al menos 3 síntomas físicos (inquietud, fatiga, dificultades de concentración, tensión muscular, trastornos del sueño).',
+            differentialDiagnosis: [
+              'Trastorno de Ansiedad por Enfermedad',
+              'Trastorno Obsesivo-Compulsivo',
+              'Trastorno de Adaptación con Ansiedad'
+            ]
+          }
+        ]
+      },
+      intermediate: {
+        psychotic: [
+          {
+            id: 'SCZ_001',
+            category: 'psychotic',
+            patient: {
+              name: 'Andrea López',
+              age: 22,
+              gender: 'Femenino',
+              occupation: 'Estudiante universitaria',
+              maritalStatus: 'Soltera'
+            },
+            background: 'Estudiante universitaria de 22 años que es traída por sus padres debido a cambios significativos en su comportamiento y funcionamiento en los últimos 4 meses. Los padres reportan deterioro académico marcado y comportamientos extraños.',
+            presentingConcerns: [
+              'Ideas delirantes de persecución ("me están siguiendo")',
+              'Alucinaciones auditivas (voces que comentan sus acciones)',
+              'Lenguaje desorganizado con asociaciones laxas',
+              'Comportamiento desorganizado (higiene personal deteriorada)',
+              'Aplanamiento afectivo y retraimiento social marcado',
+              'Abandono de actividades académicas y sociales',
+              'Suspicacia e hipervigilancia constante'
+            ],
+            symptoms: [
+              'ideas delirantes', 'alucinaciones auditivas', 'lenguaje desorganizado',
+              'comportamiento desorganizado', 'síntomas negativos', 'aislamiento social'
+            ],
+            psychosocialFactors: [
+              'Estrés académico universitario',
+              'Uso de cannabis en los últimos años',
+              'Historia familiar de trastorno psicótico (tío paterno)',
+              'Cambios residenciales recientes'
+            ],
+            correctDiagnosis: 'Esquizofrenia',
+            dsm5Code: 'F20.9',
+            feedback: 'Correcto. La paciente presenta al menos 2 síntomas psicóticos positivos (delirios, alucinaciones) y negativos (aplanamiento afectivo), con deterioro funcional significativo durante más de 6 meses. Es importante descartar trastornos por uso de sustancias y condiciones médicas.',
+            differentialDiagnosis: [
+              'Trastorno Esquizofreniforme',
+              'Trastorno Psicótico Breve',
+              'Trastorno Psicótico Inducido por Sustancias',
+              'Primer Episodio Psicótico'
+            ]
+          }
+        ],
+        personality: [
+          {
+            id: 'BPD_001',
+            category: 'personality',
+            patient: {
+              name: 'Sofía Martínez',
+              age: 25,
+              gender: 'Femenino',
+              occupation: 'Diseñadora gráfica',
+              maritalStatus: 'Relación inestable'
+            },
+            background: 'Paciente de 25 años que acude a consulta tras ser derivada desde urgencias por un episodio de autolesión. Refiere un patrón crónico de relaciones interpersonales inestables e intensas desde la adolescencia.',
+            presentingConcerns: [
+              'Relaciones interpersonales intensas e inestables',
+              'Episodios de autolesión cuando se siente abandonada',
+              'Inestabilidad emocional con cambios rápidos de humor',
+              'Sensación crónica de vacío interno',
+              'Miedo intenso al abandono real o imaginado',
+              'Comportamientos impulsivos (compras, sexualidad)',
+              'Episodios disociativos bajo estrés extremo'
+            ],
+            symptoms: [
+              'relaciones inestables', 'autolesiones', 'inestabilidad emocional',
+              'vacío interno', 'miedo al abandono', 'impulsividad', 'disociación'
+            ],
+            psychosocialFactors: [
+              'Historia de abuso emocional en la infancia',
+              'Relación tóxica actual',
+              'Antecedentes de múltiples relaciones tormentosas',
+              'Uso ocasional de alcohol como automedicación'
+            ],
+            correctDiagnosis: 'Trastorno Límite de la Personalidad',
+            dsm5Code: 'F60.3',
+            feedback: 'Correcto. La paciente presenta al menos 5 de los 9 criterios del DSM-5 para TLP: relaciones inestables, autolesiones, inestabilidad emocional, vacío crónico, miedo al abandono, impulsividad y síntomas disociativos. El patrón es persistente desde la edad adulta temprana.',
+            differentialDiagnosis: [
+              'Trastorno Bipolar Tipo II',
+              'Trastorno de Estrés Postraumático Complejo',
+              'Trastorno Histriónico de la Personalidad'
+            ]
+          }
+        ]
+      },
+      advanced: {
+        substance: [
+          {
+            id: 'SUD_001',
+            category: 'substance',
+            patient: {
+              name: 'Miguel Fernández',
+              age: 45,
+              gender: 'Masculino',
+              occupation: 'Ejecutivo de ventas',
+              maritalStatus: 'Divorciado'
+            },
+            background: 'Ejecutivo de 45 años derivado por su empresa tras problemas de rendimiento laboral. Historia de 15 años de consumo progresivo de alcohol, inicialmente social pero que ha escalado significativamente en los últimos 3 años tras su divorcio.',
+            presentingConcerns: [
+              'Necesidad de alcohol para funcionar diariamente',
+              'Tolerancia significativa (necesita 3-4 veces más alcohol)',
+              'Síntomas de abstinencia cuando no consume (temblores, sudoración)',
+              'Múltiples intentos fallidos de reducir el consumo',
+              'Negligencia de responsabilidades laborales y familiares',
+              'Continúa bebiendo a pesar de problemas médicos (hipertensión)',
+              'Pérdida de control sobre la cantidad y frecuencia del consumo'
+            ],
+            symptoms: [
+              'dependencia física', 'tolerancia', 'síndrome de abstinencia',
+              'pérdida de control', 'negligencia de obligaciones', 'uso continuado'
+            ],
+            psychosocialFactors: [
+              'Divorcio traumático hace 3 años',
+              'Presión laboral en ventas',
+              'Aislamiento social progresivo',
+              'Historia familiar de alcoholismo (padre)',
+              'Problemas legales por conducir bajo efectos'
+            ],
+            correctDiagnosis: 'Trastorno por Uso de Alcohol, Severo',
+            dsm5Code: 'F10.20',
+            feedback: 'Correcto. El paciente presenta 7 de los 11 criterios del DSM-5 para Trastorno por Uso de Alcohol en severidad grave: tolerancia, abstinencia, pérdida de control, intentos fallidos de cesación, tiempo excesivo dedicado al consumo, negligencia de obligaciones y uso continuado a pesar de consecuencias.',
+            differentialDiagnosis: [
+              'Trastorno Depresivo inducido por Alcohol',
+              'Trastorno de Ansiedad inducido por Sustancias',
+              'Trastorno Neurocognitivo inducido por Alcohol'
+            ]
+          }
+        ],
+        eating: [
+          {
+            id: 'AN_001',
+            category: 'eating',
+            patient: {
+              name: 'Isabella Torres',
+              age: 17,
+              gender: 'Femenino',
+              occupation: 'Estudiante de bachillerato',
+              maritalStatus: 'Soltera'
+            },
+            background: 'Adolescente de 17 años traída por sus padres tras notarse pérdida de peso significativa. Comenzó una "dieta saludable" hace 8 meses que progresivamente se volvió más restrictiva. Excelente estudiante con tendencias perfeccionistas.',
+            presentingConcerns: [
+              'Restricción severa de la ingesta calórica (menos de 800 cal/día)',
+              'Pérdida de peso del 25% en 8 meses (de 55kg a 41kg)',
+              'Miedo intenso a ganar peso o engordar',
+              'Distorsión de la imagen corporal (se ve "gorda")',
+              'Amenorrea secundaria por 4 meses',
+              'Ejercicio compulsivo (3-4 horas diarias)',
+              'Rituales alimentarios y evitación de comidas familiares'
+            ],
+            symptoms: [
+              'restricción alimentaria', 'pérdida de peso severa', 'miedo a engordar',
+              'distorsión corporal', 'amenorrea', 'ejercicio compulsivo'
+            ],
+            psychosocialFactors: [
+              'Perfeccionismo académico extremo',
+              'Presión por rendimiento escolar',
+              'Comentarios sobre peso de compañeros',
+              'Madre con historia de trastornos alimentarios',
+              'Deportista de élite (ballet)'
+            ],
+            correctDiagnosis: 'Anorexia Nerviosa, Tipo Restrictivo',
+            dsm5Code: 'F50.01',
+            feedback: 'Correcto. La paciente presenta los tres criterios principales del DSM-5 para Anorexia Nerviosa: restricción energética con peso significativamente bajo, miedo intenso a ganar peso, y alteración en la percepción del peso/forma corporal. La severidad es grave por el IMC <16.',
+            differentialDiagnosis: [
+              'Trastorno Evitativo/Restrictivo de la Ingesta',
+              'Trastorno Depresivo Mayor con pérdida de apetito',
+              'Condición médica que cause pérdida de peso'
+            ]
+          }
+        ]
+      }
+    };
+
+    // Application State
+    let currentCase = null;
+    let currentDifficulty = 'beginner';
+    let currentCategory = 'all';
+    let historyCount = 0;
+    let caseHistory = JSON.parse(localStorage.getItem('psychologySimHistory') || '[]');
+
+    // DOM Elements
+    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const caseContent = document.getElementById('caseContent');
+    const diagnosisInput = document.getElementById('diagnosisInput');
+    const reasoningInput = document.getElementById('reasoningInput');
+    const evaluateBtn = document.getElementById('evaluateBtn');
+    const newCaseBtn = document.getElementById('newCaseBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const resultArea = document.getElementById('resultArea');
+    const historyTableBody = document.getElementById('historyTableBody');
+
+    // Event Listeners
+    difficultyButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        difficultyButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentDifficulty = btn.dataset.level;
+      });
+    });
+
+    categoryFilter.addEventListener('change', (e) => {
+      currentCategory = e.target.value;
+    });
+
+    newCaseBtn.addEventListener('click', generateNewCase);
+    evaluateBtn.addEventListener('click', evaluateDiagnosis);
+    exportBtn.addEventListener('click', exportHistory);
+
+    // Case Generation
+    function generateNewCase() {
+      const availableCases = [];
+      
+      if (currentCategory === 'all') {
+        Object.values(caseDatabase[currentDifficulty]).forEach(categoryData => {
+          availableCases.push(...categoryData);
+        });
+      } else {
+        const categoryData = caseDatabase[currentDifficulty][currentCategory];
+        if (categoryData) {
+          availableCases.push(...categoryData);
+        }
+      }
+
+      if (availableCases.length === 0) {
+        caseContent.innerHTML = `
+          <div class="result incorrect">
+            <i class="fas fa-exclamation-triangle result-icon"></i>
+            <div class="result-content">
+              <h4>No hay casos disponibles</h4>
+              <p>No se encontraron casos para la combinación de dificultad y categoría seleccionada.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      currentCase = availableCases[Math.floor(Math.random() * availableCases.length)];
+      renderCase();
+      clearInputs();
+    }
+
+    function renderCase() {
+      if (!currentCase) return;
+
+      const { patient, background, presentingConcerns, psychosocialFactors } = currentCase;
+      
+      caseContent.innerHTML = `
+        <div class="case-content">
+          <div class="patient-info">
+            <div class="info-item">
+              <i class="fas fa-user info-icon"></i>
+              <span class="info-label">Paciente:</span>
+              <span class="info-value">${patient.name}</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-birthday-cake info-icon"></i>
+              <span class="info-label">Edad:</span>
+              <span class="info-value">${patient.age} años</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-venus-mars info-icon"></i>
+              <span class="info-label">Género:</span>
+              <span class="info-value">${patient.gender}</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-briefcase info-icon"></i>
+              <span class="info-label">Ocupación:</span>
+              <span class="info-value">${patient.occupation}</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-heart info-icon"></i>
+              <span class="info-label">Estado Civil:</span>
+              <span class="info-value">${patient.maritalStatus}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-description">
+          <h4><i class="fas fa-file-medical"></i> Historia Clínica</h4>
+          <p>${background}</p>
+        </div>
+
+        <div class="case-description">
+          <h4><i class="fas fa-list-ul"></i> Síntomas y Manifestaciones Clínicas</h4>
+          <ul>
+            ${presentingConcerns.map(concern => `<li>${concern}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="case-description">
+          <h4><i class="fas fa-users"></i> Factores Psicosociales</h4>
+          <div class="symptoms-grid">
+            ${psychosocialFactors.map(factor => `
+              <div class="symptom-tag">
+                <i class="fas fa-circle"></i>
+                ${factor}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function clearInputs() {
+      diagnosisInput.value = '';
+      reasoningInput.value = '';
+      resultArea.innerHTML = '';
+    }
+
+    // Diagnosis Evaluation
+    function evaluateDiagnosis() {
+      const enteredDiagnosis = diagnosisInput.value.trim();
+      const reasoning = reasoningInput.value.trim();
+
+      if (!enteredDiagnosis) {
+        showAlert('Por favor, ingrese un diagnóstico antes de evaluar.', 'warning');
+        return;
+      }
+
+      if (!currentCase) {
+        showAlert('No hay caso activo para evaluar.', 'danger');
+        return;
+      }
+
+      const result = evaluateAnswer(enteredDiagnosis, currentCase);
+      displayResult(result);
+      
+      // Add to history
+      addToHistory({
+        date: new Date().toLocaleDateString('es-ES'),
+        patient: currentCase.patient.name,
+        age: currentCase.patient.age,
+        difficulty: currentDifficulty,
+        category: getCategoryName(currentCase.category),
+        enteredDiagnosis,
+        reasoning,
+        correct: result.isCorrect,
+        score: result.score,
+        feedback: result.feedback
+      });
+    }
+
+    function evaluateAnswer(entered, caseData) {
+      const correct = caseData.correctDiagnosis.toLowerCase();
+      const enteredLower = entered.toLowerCase();
+      
+      // Exact match
+      if (enteredLower === correct) {
+        return {
+          isCorrect: true,
+          score: 100,
+          type: 'correct',
+          feedback: caseData.feedback
+        };
+      }
+      
+      // Partial matches for related diagnoses
+      const partialMatches = [
+        { terms: ['depresivo', 'depresión'], related: ['trastorno depresivo', 'episodio depresivo'] },
+        { terms: ['ansiedad', 'ansioso'], related: ['trastorno de ansiedad', 'ansiedad generalizada'] },
+        { terms: ['bipolar', 'maníaco'], related: ['trastorno bipolar', 'episodio maníaco'] },
+        { terms: ['esquizofrenia', 'psicótico'], related: ['trastorno psicótico', 'esquizofrenia'] }
+      ];
+
+      for (let match of partialMatches) {
+        if (match.terms.some(term => correct.includes(term) && enteredLower.includes(term))) {
+          return {
+            isCorrect: false,
+            score: 60,
+            type: 'partial',
+            feedback: `Diagnóstico parcialmente correcto. ${caseData.feedback}`
+          };
+        }
+      }
+
+      return {
+        isCorrect: false,
+        score: 0,
+        type: 'incorrect',
+        feedback: caseData.feedback
+      };
+    }
+
+    function displayResult(result) {
+      const resultClass = result.type;
+      const icon = result.isCorrect ? 'fa-check-circle' : 
+                   result.type === 'partial' ? 'fa-exclamation-circle' : 'fa-times-circle';
+      
+      const title = result.isCorrect ? 'Diagnóstico Correcto' :
+                    result.type === 'partial' ? 'Diagnóstico Parcialmente Correcto' : 'Diagnóstico Incorrecto';
+
+      resultArea.innerHTML = `
+        <div class="result ${resultClass}">
+          <i class="fas ${icon} result-icon"></i>
+          <div class="result-content">
+            <h4>${title} (${result.score}/100 puntos)</h4>
+            <p><strong>Diagnóstico esperado:</strong> ${currentCase.correctDiagnosis} (${currentCase.dsm5Code})</p>
+            <div class="feedback">
+              <strong>Retroalimentación clínica:</strong><br>
+              ${result.feedback}
+              ${currentCase.differentialDiagnosis ? `
+                <br><br><strong>Diagnósticos diferenciales a considerar:</strong>
+                <ul>
+                  ${currentCase.differentialDiagnosis.map(dx => `<li>${dx}</li>`).join('')}
+                </ul>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // History Management
+    function addToHistory(entry) {
+      historyCount++;
+      entry.id = historyCount;
+      caseHistory.unshift(entry);
+      
+      // Keep only last 50 entries
+      if (caseHistory.length > 50) {
+        caseHistory = caseHistory.slice(0, 50);
+      }
+      
+      localStorage.setItem('psychologySimHistory', JSON.stringify(caseHistory));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      if (caseHistory.length === 0) {
+        historyTableBody.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align: center; color: var(--gray-500); padding: 2rem;">
+              <i class="fas fa-clipboard-list" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+              No hay casos evaluados aún. ¡Comienza evaluando tu primer caso!
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      historyTableBody.innerHTML = caseHistory.map((entry, index) => `
+        <tr>
+          <td data-label="#">${entry.id}</td>
+          <td data-label="Fecha">${entry.date}</td>
+          <td data-label="Paciente">${entry.patient}</td>
+          <td data-label="Edad">${entry.age}</td>
+          <td data-label="Dificultad">
+            <span class="difficulty-badge difficulty-${entry.difficulty}">
+              ${getDifficultyLabel(entry.difficulty)}
+            </span>
+          </td>
+          <td data-label="Categoría">${entry.category}</td>
+          <td data-label="Diagnóstico">${entry.enteredDiagnosis}</td>
+          <td data-label="Resultado">
+            <span class="status-badge ${entry.correct ? 'status-correct' : entry.score > 50 ? 'status-partial' : 'status-incorrect'}">
+              <i class="fas ${entry.correct ? 'fa-check' : entry.score > 50 ? 'fa-exclamation' : 'fa-times'}"></i>
+              ${entry.correct ? 'Correcto' : entry.score > 50 ? 'Parcial' : 'Incorrecto'}
+            </span>
+          </td>
+          <td data-label="Puntuación">${entry.score}/100</td>
+        </tr>
+      `).join('');
+    }
+
+    // Utility Functions
+    function getCategoryName(category) {
+      const categories = {
+        mood: 'Trastornos del Estado de Ánimo',
+        anxiety: 'Trastornos de Ansiedad',
+        psychotic: 'Trastornos Psicóticos',
+        personality: 'Trastornos de Personalidad',
+        substance: 'Trastornos por Uso de Sustancias',
+        eating: 'Trastornos de la Conducta Alimentaria'
+      };
+      return categories[category] || category;
+    }
+
+    function getDifficultyLabel(difficulty) {
+      const labels = {
+        beginner: 'Principiante',
+        intermediate: 'Intermedio',
+        advanced: 'Avanzado'
+      };
+      return labels[difficulty] || difficulty;
+    }
+
+    function showAlert(message, type = 'info') {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = `result ${type}`;
+      alertDiv.innerHTML = `
+        <i class="fas fa-info-circle result-icon"></i>
+        <div class="result-content">
+          <p>${message}</p>
+        </div>
+      `;
+      
+      resultArea.innerHTML = '';
+      resultArea.appendChild(alertDiv);
+      
+      setTimeout(() => {
+        alertDiv.remove();
+      }, 5000);
+    }
+
+    function exportHistory() {
+      if (caseHistory.length === 0) {
+        showAlert('No hay historial para exportar.', 'warning');
+        return;
+      }
+
+      const csvContent = [
+        ['ID', 'Fecha', 'Paciente', 'Edad', 'Dificultad', 'Categoría', 'Diagnóstico Ingresado', 'Correcto', 'Puntuación', 'Razonamiento'].join(','),
+        ...caseHistory.map(entry => [
+          entry.id,
+          entry.date,
+          `"${entry.patient}"`,
+          entry.age,
+          entry.difficulty,
+          `"${entry.category}"`,
+          `"${entry.enteredDiagnosis}"`,
+          entry.correct ? 'Sí' : 'No',
+          entry.score,
+          `"${entry.reasoning || 'No proporcionado'}"`
+        ].join(','))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `historial_casos_psicologia_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showAlert('Historial exportado exitosamente.', 'success');
+    }
+
+    // Initialize Application
+    function init() {
+      renderHistory();
+      generateNewCase();
+    }
+
+    // Start the application
+    init();
+  </script>
+</body>
+</html>
