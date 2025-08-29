@@ -892,43 +892,43 @@ async function generateNewCase() {
         <div class="case-content">
           <div class="patient-info">
             <div class="info-item">
-              <div class="info-label"><i class="fas fa-user"></i>             Paciente</div>
+              <div class="info-label">  Paciente</div>
               <div class="info-value">${caseData.patient.name}</div>
             </div>
             <div class="info-item">
-              <div class="info-label"><i class="fas fa-birthday-cake"></i> Edad</div>
+              <div class="info-label"> Edad</div>
               <div class="info-value">${caseData.patient.age} años</div>
             </div>
             <div class="info-item">
-              <div class="info-label"><i class="fas fa-venus-mars"></i> Género</div>
+              <div class="info-label"> Género</div>
               <div class="info-value">${caseData.patient.gender}</div>
             </div>
             <div class="info-item">
-              <div class="info-label"><i class="fas fa-briefcase"></i> Ocupación</div>
+              <div class="info-label"> Ocupación</div>
               <div class="info-value">${caseData.patient.occupation}</div>
             </div>
             <div class="info-item">
-              <div class="info-label"><i class="fas fa-heart"></i> Estado Civil</div>
+              <div class="info-label"> Estado Civil</div>
               <div class="info-value">${caseData.patient.maritalStatus}</div>
             </div>
           </div>
           
           <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
-            <h4 style="color: var(--text-primary); margin-bottom: 1rem;"><i class="fas fa-file-medical-alt"></i> Historia Clínica</h4>
+            <h4 style="color: var(--text-primary); margin-bottom: 1rem;"> Historia Clínica</h4>
             <p style="line-height: 1.6;">${caseData.background}</p>
             
-            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Motivos de Consulta</h4>
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"> Motivos de Consulta</h4>
             <ul style="margin-left: 1rem;">
               ${caseData.presentingConcerns.map(concern => `<li style="margin-bottom: 0.5rem;">${concern}</li>`).join('')}
             </ul>
             
-            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-exclamation-circle"></i> Síntomas Identificados</h4>
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"> Síntomas Identificados</h4>
             <div class="symptoms-grid">
               ${symptomsHtml}
             </div>
             
             ${caseData.psychosocialFactors ? `
-            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-users"></i> Factores Psicosociales</h4>
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"> Factores Psicosociales</h4>
             <ul style="margin-left: 1rem;">
               ${caseData.psychosocialFactors.map(factor => `<li style="margin-bottom: 0.5rem;">${factor}</li>`).join('')}
             </ul>
@@ -1195,5 +1195,6 @@ Evalúa y responde SOLO con JSON:
   </script>
 </body>
 </html>
+
 
 
