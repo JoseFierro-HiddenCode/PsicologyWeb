@@ -3,486 +3,484 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JoseFierro</title>
+  <title>Simulador Psicológico - Nicole</title>
   
-  <!-- Font Awesome for professional medical icons -->
+  <!-- Font Awesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts for professional typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* Professional Medical Color Palette */
-      --primary-blue: #1e40af;
-      --secondary-blue: #3b82f6;
-      --light-blue: #dbeafe;
-      --accent-blue: #60a5fa;
+      /* Modern Color Palette */
+      --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      --warning: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+      --danger: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
       
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
+      --dark-bg: #0f0f23;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --text-light: #718096;
+      --border: rgba(255, 255, 255, 0.2);
       
-      --success: #059669;
-      --success-bg: #d1fae5;
-      --warning: #d97706;
-      --warning-bg: #fef3c7;
-      --danger: #dc2626;
-      --danger-bg: #fee2e2;
+      --shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      --shadow-lg: 0 15px 35px rgba(31, 38, 135, 0.2);
+      --shadow-xl: 0 20px 50px rgba(31, 38, 135, 0.4);
       
-      --white: #ffffff;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --border-radius: 20px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--gray-50) 0%, var(--light-blue) 100%);
-      color: var(--gray-900);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-attachment: fixed;
+      color: var(--text-primary);
       line-height: 1.6;
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      animation: float 20s infinite linear;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-100px) rotate(360deg); }
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Header Styles */
-    header {
+    /* Glass morphism header */
+    .header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
       text-align: center;
-      margin-bottom: 3rem;
-      background: var(--white);
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      z-index: -1;
     }
 
     .header-icon {
-      display: inline-block;
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
+      width: 100px;
+      height: 100px;
+      background: var(--accent);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      color: var(--white);
-      box-shadow: var(--shadow-md);
+      margin: 0 auto 1.5rem;
+      font-size: 3rem;
+      color: white;
+      box-shadow: var(--shadow-lg);
+      animation: pulse 2s infinite;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-blue);
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--primary);
+      -webkit-background-clip: text;
+      
+      background-clip: text;
       margin-bottom: 0.5rem;
+      text-shadow: 0 0 30px rgba(33, 4, 44, 0.781);
     }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--gray-600);
+    .header .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
       font-weight: 400;
     }
 
-    /* Card Styles */
-    .card {
-      background: var(--white);
+    /* Modern glass cards */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
       padding: 2rem;
-      border-radius: 16px;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--gray-200);
       margin-bottom: 2rem;
-      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .glass-card:hover::before {
+      left: 100%;
     }
 
     .card-header {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       padding-bottom: 1rem;
-      border-bottom: 2px solid var(--gray-100);
+      border-bottom: 2px solid rgba(255,255,255,0.1);
     }
 
     .card-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
-      border-radius: 12px;
+      width: 60px;
+      height: 60px;
+      background: var(--primary);
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--white);
-      font-size: 1.2rem;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
     }
 
     .card-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--gray-800);
-      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
     }
 
-    /* Case Display Styles */
+    /* Controls panel */
+    .controls-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .difficulty-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .difficulty-btn {
+      padding: 1rem;
+      border: none;
+      border-radius: 15px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .difficulty-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .difficulty-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .difficulty-btn.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Case display */
     .case-content {
-      background: var(--gray-50);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--secondary-blue);
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border-left: 5px solid;
+      border-image: var(--accent) 1;
     }
 
     .patient-info {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .info-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem;
-      background: var(--white);
-      border-radius: 8px;
-      border: 1px solid var(--gray-200);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
 
-    .info-icon {
-      color: var(--secondary-blue);
-      font-size: 1rem;
+    .info-item:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow);
     }
 
     .info-label {
-      font-weight: 500;
-      color: var(--gray-700);
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
     }
 
     .info-value {
-      color: var(--gray-600);
-    }
-
-    .case-description {
-      background: var(--white);
-      padding: 1.5rem;
-      border-radius: 12px;
-      border: 1px solid var(--gray-200);
-      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 1.1rem;
     }
 
     .symptoms-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
       margin-top: 1rem;
     }
 
     .symptom-tag {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.75rem;
-      background: var(--light-blue);
-      color: var(--primary-blue);
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    /* Form Styles */
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 500;
-      color: var(--gray-700);
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-    }
-
-    .input-container {
-      position: relative;
-    }
-
-    input, select, textarea {
-      width: 100%;
+      background: var(--accent);
+      color: white;
       padding: 0.75rem 1rem;
-      border: 2px solid var(--gray-200);
-      border-radius: 10px;
-      background: var(--white);
-      color: var(--gray-900);
+      border-radius: 25px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+
+    .symptom-tag:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 15px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
       font-size: 1rem;
-      font-family: inherit;
-      transition: all 0.3s ease;
+      transition: var(--transition);
     }
 
-    input:focus, select:focus, textarea:focus {
+    .form-input:focus {
       outline: none;
-      border-color: var(--secondary-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+      transform: scale(1.02);
     }
 
-    textarea {
+    .form-textarea {
       min-height: 120px;
       resize: vertical;
-    }
-
-    /* Button Styles */
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 500;
       font-family: inherit;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .modern-btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-      color: var(--white);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
     }
 
     .btn-secondary {
-      background: var(--white);
-      color: var(--gray-700);
-      border: 2px solid var(--gray-200);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      border: 2px solid rgba(255,255,255,0.3);
     }
 
-    .btn-secondary:hover {
-      background: var(--gray-50);
-      border-color: var(--gray-300);
+    .modern-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
     }
 
-    .btn-success {
-      background: var(--success);
-      color: var(--white);
+    .modern-btn:active {
+      transform: translateY(-1px);
     }
 
-    .btn-danger {
-      background: var(--danger);
-      color: var(--white);
-    }
-
-    /* Result Styles */
+    /* Results */
     .result {
-      margin-top: 1.5rem;
-      padding: 1.5rem;
-      border-radius: 12px;
-      border-left: 4px solid;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-top: 2rem;
+      border-left: 5px solid;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
     }
 
     .result.correct {
-      background: var(--success-bg);
-      border-color: var(--success);
-      color: var(--success);
+      background: rgba(17, 153, 142, 0.1);
+      border-color: #11998e;
+      color: #0d5d56;
     }
 
     .result.incorrect {
-      background: var(--danger-bg);
-      border-color: var(--danger);
-      color: var(--danger);
+      background: rgba(255, 65, 108, 0.1);
+      border-color: #ff416c;
+      color: #cc1744;
     }
 
     .result.partial {
-      background: var(--warning-bg);
-      border-color: var(--warning);
-      color: var(--warning);
+      background: rgba(252, 74, 26, 0.1);
+      border-color: #fc4a1a;
+      color: #bf3815;
     }
 
-    .result-icon {
-      font-size: 1.5rem;
-      margin-top: 0.25rem;
-    }
-
-    .result-content h4 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feedback {
-      background: var(--white);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-top: 1rem;
-      color: var(--gray-700);
-      border: 1px solid var(--gray-200);
-    }
-
-    /* Controls Panel */
-    .controls-panel {
-      background: var(--gray-50);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-    }
-
-    .difficulty-selector {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .difficulty-btn {
-      padding: 0.5rem 1rem;
-      border: 2px solid var(--gray-300);
-      background: var(--white);
-      color: var(--gray-600);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .difficulty-btn.active {
-      border-color: var(--secondary-blue);
-      background: var(--secondary-blue);
-      color: var(--white);
-    }
-
-    /* History Table */
-    .history-section {
-      background: var(--white);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      border: 1px solid var(--gray-200);
-    }
-
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--gray-200);
-      font-size: 0.9rem;
-    }
-
-    th {
-      background: var(--gray-50);
-      color: var(--gray-700);
-      font-weight: 600;
-      position: sticky;
-      top: 0;
-    }
-
-    tr:hover {
-      background: var(--gray-50);
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-    .status-correct {
-      background: var(--success-bg);
-      color: var(--success);
-    }
-
-    .status-incorrect {
-      background: var(--danger-bg);
-      color: var(--danger);
-    }
-
-    .status-partial {
-      background: var(--warning-bg);
-      color: var(--warning);
-    }
-
-    /* Disclaimer */
-    .disclaimer {
-      background: linear-gradient(135deg, #fef3c7, #fed7aa);
-      padding: 1.5rem;
-      border-radius: 12px;
-      border: 1px solid #f59e0b;
-      color: #92400e;
-      margin-bottom: 2rem;
+    .result-header {
       display: flex;
       align-items: center;
       gap: 1rem;
+      margin-bottom: 1rem;
     }
 
-    .disclaimer-icon {
-      font-size: 1.5rem;
-      color: #f59e0b;
+    .result-icon {
+      font-size: 2rem;
     }
 
-    /* Loading States */
+    .feedback {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Loading */
     .loading {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-      color: var(--gray-500);
+      gap: 1rem;
+      padding: 3rem;
+      color: var(--text-primary);
     }
 
-    .spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid var(--gray-300);
-      border-top: 2px solid var(--secondary-blue);
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(102, 126, 234, 0.2);
+      border-top: 4px solid #667eea;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -492,85 +490,82 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
-
-      header {
-        padding: 1.5rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .card {
-        padding: 1.5rem;
-      }
-
-      .patient-info {
-        grid-template-columns: 1fr;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-
-      .btn {
-        justify-content: center;
-      }
-
-      .difficulty-selector {
-        flex-wrap: wrap;
-      }
-
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-
-      thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-
-      tr {
-        border: 1px solid var(--gray-200);
-        margin-bottom: 1rem;
-        border-radius: 8px;
-        padding: 1rem;
-        background: var(--white);
-      }
-
-      td {
-        border: none;
-        position: relative;
-        padding: 0.5rem 0;
-        padding-left: 40%;
-      }
-
-      td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 35%;
-        font-weight: 600;
-        color: var(--gray-700);
-      }
+    /* Table */
+    .table-container {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
-    /* Print Styles */
-    @media print {
-      body {
-        background: white;
-      }
-      
-      .card {
-        box-shadow: none;
-        border: 1px solid var(--gray-300);
-      }
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modern-table th {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .modern-table td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modern-table tr:hover {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .status-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .status-correct {
+      background: var(--success);
+      color: white;
+    }
+
+    .status-incorrect {
+      background: var(--danger);
+      color: white;
+    }
+
+    .status-partial {
+      background: var(--warning);
+      color: white;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      background: var(--warning);
+      color: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .header h1 { font-size: 2rem; }
+      .patient-info { grid-template-columns: 1fr; }
+      .symptoms-grid { grid-template-columns: 1fr; }
+      .difficulty-selector { grid-template-columns: 1fr; }
+      .button-group { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -578,104 +573,101 @@
 <body>
   <div class="container">
     <!-- Header -->
-    <header>
+    <div class="header">
       <div class="header-icon">
         <i class="fas fa-brain"></i>
       </div>
-      <h1>Simulador Diagnóstico Psicológico  ‭  NICOLE ‭❤</h1>
+      <h1>Simulador Psicológico NICOLE  ♥ </h1>
       
-    </header>
+    </div>
 
-  
+    <!-- Disclaimer -->
+    
 
-    <!-- Controls Panel -->
+    <!-- Controls -->
     <div class="controls-panel">
       <div class="card-header">
         <div class="card-icon">
-          <i class="fas fa-cogs"></i>
+          <i class="fas fa-sliders-h"></i>
         </div>
-        <h3 class="card-title">Configuración de Caso</h3>
+        <h3 class="card-title">Generador IA de Casos</h3>
       </div>
       
-      <div class="form-group">
-        <label>
-          <i class="fas fa-layer-group"></i>
-          Nivel de Dificultad
-        </label>
-        <div class="difficulty-selector">
-          <button class="difficulty-btn active" data-level="beginner">
-            <i class="fas fa-star"></i> Principiante
-          </button>
-          <button class="difficulty-btn" data-level="intermediate">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i> Intermedio
-          </button>
-          <button class="difficulty-btn" data-level="advanced">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> Avanzado
-          </button>
-        </div>
+      <div class="difficulty-selector">
+        <button class="difficulty-btn active" data-level="beginner">
+          <i class="fas fa-star"></i>
+          <div>Principiante</div>
+        </button>
+        <button class="difficulty-btn" data-level="intermediate">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <div>Intermedio</div>
+        </button>
+        <button class="difficulty-btn" data-level="advanced">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <div>Avanzado</div>
+        </button>
       </div>
 
       <div class="form-group">
-        <label>
+        <label class="form-label">
           <i class="fas fa-filter"></i>
           Categoría Diagnóstica
         </label>
-        <select id="categoryFilter">
-          <option value="all">Todas las categorías</option>
-          <option value="mood">Trastornos del Estado de Ánimo</option>
-          <option value="anxiety">Trastornos de Ansiedad</option>
-          <option value="psychotic">Trastornos Psicóticos</option>
-          <option value="personality">Trastornos de Personalidad</option>
-          <option value="substance">Trastornos por Uso de Sustancias</option>
-          <option value="eating">Trastornos de la Conducta Alimentaria</option>
+        <select id="categoryFilter" class="form-input">
+          <option value="all">🧠 Todas las categorías</option>
+          <option value="mood">😔 Trastornos del Estado de Ánimo</option>
+          <option value="anxiety">😰 Trastornos de Ansiedad</option>
+          <option value="psychotic">🌀 Trastornos Psicóticos</option>
+          <option value="personality">👤 Trastornos de Personalidad</option>
+          <option value="substance">🚫 Trastornos por Sustancias</option>
+          <option value="eating">🍽️ Trastornos Alimentarios</option>
         </select>
       </div>
     </div>
 
-    <!-- Case Display Card -->
-    <div class="card">
+    <!-- Case Display -->
+    <div class="glass-card">
       <div class="card-header">
         <div class="card-icon">
           <i class="fas fa-user-md"></i>
         </div>
-        <h2 class="card-title">Caso Clínico Actual</h2>
+        <h2 class="card-title">Caso Clínico Generado por IA</h2>
       </div>
 
       <div id="caseContent">
         <div class="loading">
-          <div class="spinner"></div>
-          Generando caso clínico...
+          <div class="loading-spinner"></div>
+          <h3>Generando caso único con IA...</h3>
+          <p>Creando paciente, síntomas y contexto clínico</p>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="diagnosisInput">
+        <label class="form-label" for="diagnosisInput">
           <i class="fas fa-stethoscope"></i>
           Diagnóstico Principal
         </label>
-        <div class="input-container">
-          <input type="text" id="diagnosisInput" placeholder="Ej: Trastorno Depresivo Mayor (F32.9)">
-        </div>
+        <input type="text" id="diagnosisInput" class="form-input" >
       </div>
 
       <div class="form-group">
-        <label for="reasoningInput">
+        <label class="form-label" for="reasoningInput">
           <i class="fas fa-clipboard-list"></i>
           Justificación Diagnóstica
         </label>
-        <textarea id="reasoningInput" ></textarea>
+        <textarea id="reasoningInput" class="form-input form-textarea" ></textarea>
       </div>
 
       <div class="button-group">
-        <button class="btn btn-primary" id="evaluateBtn">
+        <button class="modern-btn btn-primary" id="evaluateBtn">
           <i class="fas fa-check-circle"></i>
-          Evaluar Diagnóstico
+          Evaluar
         </button>
-        <button class="btn btn-secondary" id="newCaseBtn">
-          <i class="fas fa-refresh"></i>
-          Nuevo Caso
+        <button class="modern-btn btn-secondary" id="newCaseBtn">
+          <i class="fas fa-sparkles"></i>
+          Generar Nuevo Caso
         </button>
-        <button class="btn btn-secondary" id="exportBtn">
+        <button class="modern-btn btn-secondary" id="exportBtn">
           <i class="fas fa-download"></i>
           Exportar Historial
         </button>
@@ -684,9 +676,9 @@
       <div id="resultArea"></div>
     </div>
 
-    <!-- History Section -->
-    <div class="history-section">
-      <div class="card-header" style="padding: 1.5rem; margin-bottom: 0;">
+    <!-- History -->
+    <div class="glass-card">
+      <div class="card-header">
         <div class="card-icon">
           <i class="fas fa-history"></i>
         </div>
@@ -694,22 +686,19 @@
       </div>
       
       <div class="table-container">
-        <table id="historyTable">
+        <table class="modern-table">
           <thead>
             <tr>
               <th>#</th>
               <th>Fecha</th>
               <th>Paciente</th>
-              <th>Edad</th>
-              <th>Dificultad</th>
               <th>Categoría</th>
-              <th>Diagnóstico Ingresado</th>
+              <th>Tu Diagnóstico</th>
               <th>Resultado</th>
               <th>Puntuación</th>
             </tr>
           </thead>
           <tbody id="historyTableBody">
-            <!-- History entries will be populated here -->
           </tbody>
         </table>
       </div>
@@ -717,643 +706,492 @@
   </div>
 
   <script>
-    // Professional Psychology Case Database
-    const caseDatabase = {
-      beginner: {
-        mood: [
-          {
-            id: 'MDD_001',
-            category: 'mood',
-            patient: {
-              name: 'María González',
-              age: 28,
-              gender: 'Femenino',
-              occupation: 'Profesora de primaria',
-              maritalStatus: 'Soltera'
-            },
-            background: 'Paciente de 28 años que acude a consulta por primera vez derivada por su médico de cabecera. Refiere sentirse "muy triste y sin energía" desde hace aproximadamente 3 meses, coincidiendo con el final de una relación sentimental de 2 años.',
-            presentingConcerns: [
-              'Estado de ánimo deprimido la mayor parte del día, casi todos los días',
-              'Pérdida marcada de interés en actividades que antes disfrutaba',
-              'Fatiga significativa y pérdida de energía',
-              'Insomnio de conciliación y mantenimiento',
-              'Sentimientos de inutilidad y culpa excesiva',
-              'Dificultades de concentración en el trabajo',
-              'Pérdida de apetito con disminución de 4 kg en 2 meses'
-            ],
-            symptoms: [
-              'tristeza persistente', 'anhedonia', 'fatiga', 'insomnio', 
-              'sentimientos de culpa', 'dificultades de concentración', 'pérdida de apetito'
-            ],
-            psychosocialFactors: [
-              'Ruptura sentimental reciente',
-              'Estrés laboral aumentado',
-              'Aislamiento social progresivo',
-              'Historia familiar de depresión (madre)'
-            ],
-            correctDiagnosis: 'Trastorno Depresivo Mayor',
-            dsm5Code: 'F32.9',
-            feedback: 'Correcto. La paciente presenta 7 de los 9 criterios del DSM-5 para Episodio Depresivo Mayor: estado de ánimo deprimido, anhedonia, pérdida de peso, insomnio, fatiga, sentimientos de inutilidad y dificultades de concentración. Los síntomas han persistido por más de 2 semanas y causan deterioro funcional significativo.',
-            differentialDiagnosis: [
-              'Trastorno de Adaptación con Estado de Ánimo Deprimido',
-              'Trastorno Bipolar (descartar episodios maníacos/hipomaníacos previos)',
-              'Trastorno Depresivo debido a otra condición médica'
-            ]
-          }
-        ],
-        anxiety: [
-          {
-            id: 'GAD_001',
-            category: 'anxiety',
-            patient: {
-              name: 'Carlos Rodríguez',
-              age: 35,
-              gender: 'Masculino',
-              occupation: 'Contador',
-              maritalStatus: 'Casado'
-            },
-            background: 'Paciente de 35 años, casado, padre de dos hijos, que trabaja como contador en una empresa mediana. Acude a consulta por recomendación de su esposa debido a preocupaciones excesivas que han aumentado significativamente en los últimos 8 meses.',
-            presentingConcerns: [
-              'Preocupación excesiva y persistente sobre múltiples aspectos de la vida',
-              'Dificultad para controlar las preocupaciones',
-              'Inquietud y sensación de estar "al límite"',
-              'Tensión muscular, especialmente en cuello y hombros',
-              'Fatiga debido a la preocupación constante',
-              'Dificultades para concentrarse en el trabajo',
-              'Trastornos del sueño por pensamientos intrusivos'
-            ],
-            symptoms: [
-              'preocupación excesiva', 'inquietud', 'tensión muscular', 'fatiga',
-              'dificultades de concentración', 'irritabilidad', 'trastornos del sueño'
-            ],
-            psychosocialFactors: [
-              'Presión laboral aumentada',
-              'Responsabilidades familiares',
-              'Preocupación por la economía familiar',
-              'Perfeccionismo y necesidad de control'
-            ],
-            correctDiagnosis: 'Trastorno de Ansiedad Generalizada',
-            dsm5Code: 'F41.1',
-            feedback: 'Correcto. El paciente presenta los criterios del DSM-5 para TAG: preocupación excesiva y ansiedad sobre múltiples eventos durante más de 6 meses, dificultad para controlar la preocupación, y al menos 3 síntomas físicos (inquietud, fatiga, dificultades de concentración, tensión muscular, trastornos del sueño).',
-            differentialDiagnosis: [
-              'Trastorno de Ansiedad por Enfermedad',
-              'Trastorno Obsesivo-Compulsivo',
-              'Trastorno de Adaptación con Ansiedad'
-            ]
-          }
-        ]
+    // AI Case Generator - Completely automated with no hardcoded cases
+    const APP_CONFIG = {
+      categories: {
+        mood: 'Trastornos del Estado de Ánimo',
+        anxiety: 'Trastornos de Ansiedad',
+        psychotic: 'Trastornos Psicóticos', 
+        personality: 'Trastornos de Personalidad',
+        substance: 'Trastornos por Uso de Sustancias',
+        eating: 'Trastornos de la Conducta Alimentaria'
       },
-      intermediate: {
-        psychotic: [
-          {
-            id: 'SCZ_001',
-            category: 'psychotic',
-            patient: {
-              name: 'Andrea López',
-              age: 22,
-              gender: 'Femenino',
-              occupation: 'Estudiante universitaria',
-              maritalStatus: 'Soltera'
-            },
-            background: 'Estudiante universitaria de 22 años que es traída por sus padres debido a cambios significativos en su comportamiento y funcionamiento en los últimos 4 meses. Los padres reportan deterioro académico marcado y comportamientos extraños.',
-            presentingConcerns: [
-              'Ideas delirantes de persecución ("me están siguiendo")',
-              'Alucinaciones auditivas (voces que comentan sus acciones)',
-              'Lenguaje desorganizado con asociaciones laxas',
-              'Comportamiento desorganizado (higiene personal deteriorada)',
-              'Aplanamiento afectivo y retraimiento social marcado',
-              'Abandono de actividades académicas y sociales',
-              'Suspicacia e hipervigilancia constante'
-            ],
-            symptoms: [
-              'ideas delirantes', 'alucinaciones auditivas', 'lenguaje desorganizado',
-              'comportamiento desorganizado', 'síntomas negativos', 'aislamiento social'
-            ],
-            psychosocialFactors: [
-              'Estrés académico universitario',
-              'Uso de cannabis en los últimos años',
-              'Historia familiar de trastorno psicótico (tío paterno)',
-              'Cambios residenciales recientes'
-            ],
-            correctDiagnosis: 'Esquizofrenia',
-            dsm5Code: 'F20.9',
-            feedback: 'Correcto. La paciente presenta al menos 2 síntomas psicóticos positivos (delirios, alucinaciones) y negativos (aplanamiento afectivo), con deterioro funcional significativo durante más de 6 meses. Es importante descartar trastornos por uso de sustancias y condiciones médicas.',
-            differentialDiagnosis: [
-              'Trastorno Esquizofreniforme',
-              'Trastorno Psicótico Breve',
-              'Trastorno Psicótico Inducido por Sustancias',
-              'Primer Episodio Psicótico'
-            ]
-          }
-        ],
-        personality: [
-          {
-            id: 'BPD_001',
-            category: 'personality',
-            patient: {
-              name: 'Sofía Martínez',
-              age: 25,
-              gender: 'Femenino',
-              occupation: 'Diseñadora gráfica',
-              maritalStatus: 'Relación inestable'
-            },
-            background: 'Paciente de 25 años que acude a consulta tras ser derivada desde urgencias por un episodio de autolesión. Refiere un patrón crónico de relaciones interpersonales inestables e intensas desde la adolescencia.',
-            presentingConcerns: [
-              'Relaciones interpersonales intensas e inestables',
-              'Episodios de autolesión cuando se siente abandonada',
-              'Inestabilidad emocional con cambios rápidos de humor',
-              'Sensación crónica de vacío interno',
-              'Miedo intenso al abandono real o imaginado',
-              'Comportamientos impulsivos (compras, sexualidad)',
-              'Episodios disociativos bajo estrés extremo'
-            ],
-            symptoms: [
-              'relaciones inestables', 'autolesiones', 'inestabilidad emocional',
-              'vacío interno', 'miedo al abandono', 'impulsividad', 'disociación'
-            ],
-            psychosocialFactors: [
-              'Historia de abuso emocional en la infancia',
-              'Relación tóxica actual',
-              'Antecedentes de múltiples relaciones tormentosas',
-              'Uso ocasional de alcohol como automedicación'
-            ],
-            correctDiagnosis: 'Trastorno Límite de la Personalidad',
-            dsm5Code: 'F60.3',
-            feedback: 'Correcto. La paciente presenta al menos 5 de los 9 criterios del DSM-5 para TLP: relaciones inestables, autolesiones, inestabilidad emocional, vacío crónico, miedo al abandono, impulsividad y síntomas disociativos. El patrón es persistente desde la edad adulta temprana.',
-            differentialDiagnosis: [
-              'Trastorno Bipolar Tipo II',
-              'Trastorno de Estrés Postraumático Complejo',
-              'Trastorno Histriónico de la Personalidad'
-            ]
-          }
-        ]
-      },
-      advanced: {
-        substance: [
-          {
-            id: 'SUD_001',
-            category: 'substance',
-            patient: {
-              name: 'Miguel Fernández',
-              age: 45,
-              gender: 'Masculino',
-              occupation: 'Ejecutivo de ventas',
-              maritalStatus: 'Divorciado'
-            },
-            background: 'Ejecutivo de 45 años derivado por su empresa tras problemas de rendimiento laboral. Historia de 15 años de consumo progresivo de alcohol, inicialmente social pero que ha escalado significativamente en los últimos 3 años tras su divorcio.',
-            presentingConcerns: [
-              'Necesidad de alcohol para funcionar diariamente',
-              'Tolerancia significativa (necesita 3-4 veces más alcohol)',
-              'Síntomas de abstinencia cuando no consume (temblores, sudoración)',
-              'Múltiples intentos fallidos de reducir el consumo',
-              'Negligencia de responsabilidades laborales y familiares',
-              'Continúa bebiendo a pesar de problemas médicos (hipertensión)',
-              'Pérdida de control sobre la cantidad y frecuencia del consumo'
-            ],
-            symptoms: [
-              'dependencia física', 'tolerancia', 'síndrome de abstinencia',
-              'pérdida de control', 'negligencia de obligaciones', 'uso continuado'
-            ],
-            psychosocialFactors: [
-              'Divorcio traumático hace 3 años',
-              'Presión laboral en ventas',
-              'Aislamiento social progresivo',
-              'Historia familiar de alcoholismo (padre)',
-              'Problemas legales por conducir bajo efectos'
-            ],
-            correctDiagnosis: 'Trastorno por Uso de Alcohol, Severo',
-            dsm5Code: 'F10.20',
-            feedback: 'Correcto. El paciente presenta 7 de los 11 criterios del DSM-5 para Trastorno por Uso de Alcohol en severidad grave: tolerancia, abstinencia, pérdida de control, intentos fallidos de cesación, tiempo excesivo dedicado al consumo, negligencia de obligaciones y uso continuado a pesar de consecuencias.',
-            differentialDiagnosis: [
-              'Trastorno Depresivo inducido por Alcohol',
-              'Trastorno de Ansiedad inducido por Sustancias',
-              'Trastorno Neurocognitivo inducido por Alcohol'
-            ]
-          }
-        ],
-        eating: [
-          {
-            id: 'AN_001',
-            category: 'eating',
-            patient: {
-              name: 'Isabella Torres',
-              age: 17,
-              gender: 'Femenino',
-              occupation: 'Estudiante de bachillerato',
-              maritalStatus: 'Soltera'
-            },
-            background: 'Adolescente de 17 años traída por sus padres tras notarse pérdida de peso significativa. Comenzó una "dieta saludable" hace 8 meses que progresivamente se volvió más restrictiva. Excelente estudiante con tendencias perfeccionistas.',
-            presentingConcerns: [
-              'Restricción severa de la ingesta calórica (menos de 800 cal/día)',
-              'Pérdida de peso del 25% en 8 meses (de 55kg a 41kg)',
-              'Miedo intenso a ganar peso o engordar',
-              'Distorsión de la imagen corporal (se ve "gorda")',
-              'Amenorrea secundaria por 4 meses',
-              'Ejercicio compulsivo (3-4 horas diarias)',
-              'Rituales alimentarios y evitación de comidas familiares'
-            ],
-            symptoms: [
-              'restricción alimentaria', 'pérdida de peso severa', 'miedo a engordar',
-              'distorsión corporal', 'amenorrea', 'ejercicio compulsivo'
-            ],
-            psychosocialFactors: [
-              'Perfeccionismo académico extremo',
-              'Presión por rendimiento escolar',
-              'Comentarios sobre peso de compañeros',
-              'Madre con historia de trastornos alimentarios',
-              'Deportista de élite (ballet)'
-            ],
-            correctDiagnosis: 'Anorexia Nerviosa, Tipo Restrictivo',
-            dsm5Code: 'F50.01',
-            feedback: 'Correcto. La paciente presenta los tres criterios principales del DSM-5 para Anorexia Nerviosa: restricción energética con peso significativamente bajo, miedo intenso a ganar peso, y alteración en la percepción del peso/forma corporal. La severidad es grave por el IMC <16.',
-            differentialDiagnosis: [
-              'Trastorno Evitativo/Restrictivo de la Ingesta',
-              'Trastorno Depresivo Mayor con pérdida de apetito',
-              'Condición médica que cause pérdida de peso'
-            ]
-          }
-        ]
+      difficulties: {
+        beginner: 'Casos directos con síntomas claros',
+        intermediate: 'Casos con algunas comorbilidades',
+        advanced: 'Casos complejos con múltiples diagnósticos diferenciales'
       }
     };
 
-    // Application State
+    // Application state
     let currentCase = null;
     let currentDifficulty = 'beginner';
     let currentCategory = 'all';
     let historyCount = 0;
-    let caseHistory = JSON.parse(localStorage.getItem('psychologySimHistory') || '[]');
+    let isGenerating = false;
 
-    // DOM Elements
-    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
-    const categoryFilter = document.getElementById('categoryFilter');
-    const caseContent = document.getElementById('caseContent');
-    const diagnosisInput = document.getElementById('diagnosisInput');
-    const reasoningInput = document.getElementById('reasoningInput');
-    const evaluateBtn = document.getElementById('evaluateBtn');
-    const newCaseBtn = document.getElementById('newCaseBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const resultArea = document.getElementById('resultArea');
-    const historyTableBody = document.getElementById('historyTableBody');
+    // DOM elements
+    const elements = {
+      caseContent: document.getElementById('caseContent'),
+      diagnosisInput: document.getElementById('diagnosisInput'),
+      reasoningInput: document.getElementById('reasoningInput'),
+      evaluateBtn: document.getElementById('evaluateBtn'),
+      newCaseBtn: document.getElementById('newCaseBtn'),
+      exportBtn: document.getElementById('exportBtn'),
+      resultArea: document.getElementById('resultArea'),
+      historyTableBody: document.getElementById('historyTableBody'),
+      categoryFilter: document.getElementById('categoryFilter')
+    };
 
-    // Event Listeners
-    difficultyButtons.forEach(btn => {
+    // Event listeners
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        difficultyButtons.forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentDifficulty = btn.dataset.level;
       });
     });
 
-    categoryFilter.addEventListener('change', (e) => {
+    elements.categoryFilter.addEventListener('change', (e) => {
       currentCategory = e.target.value;
     });
 
-    newCaseBtn.addEventListener('click', generateNewCase);
-    evaluateBtn.addEventListener('click', evaluateDiagnosis);
-    exportBtn.addEventListener('click', exportHistory);
+    elements.newCaseBtn.addEventListener('click', generateNewCase);
+    elements.evaluateBtn.addEventListener('click', evaluateDiagnosis);
+    elements.exportBtn.addEventListener('click', exportHistory);
 
-    // Case Generation
-    function generateNewCase() {
-      const availableCases = [];
-      
-      if (currentCategory === 'all') {
-        Object.values(caseDatabase[currentDifficulty]).forEach(categoryData => {
-          availableCases.push(...categoryData);
-        });
-      } else {
-        const categoryData = caseDatabase[currentDifficulty][currentCategory];
-        if (categoryData) {
-          availableCases.push(...categoryData);
-        }
-      }
+    // AI Case Generation - NO HARDCODED CASES
+    async function generateAICase() {
+  const category = currentCategory === 'all'
+    ? Object.keys(APP_CONFIG.categories)[Math.floor(Math.random() * Object.keys(APP_CONFIG.categories).length)]
+    : currentCategory;
 
-      if (availableCases.length === 0) {
-        caseContent.innerHTML = `
-          <div class="result incorrect">
-            <i class="fas fa-exclamation-triangle result-icon"></i>
-            <div class="result-content">
-              <h4>No hay casos disponibles</h4>
-              <p>No se encontraron casos para la combinación de dificultad y categoría seleccionada.</p>
-            </div>
-          </div>
-        `;
-        return;
-      }
+  const prompt = `Crea un caso clínico psicológico realista para entrenamiento.
 
-      currentCase = availableCases[Math.floor(Math.random() * availableCases.length)];
-      renderCase();
-      clearInputs();
+ESPECIFICACIONES:
+- Categoría: ${APP_CONFIG.categories[category]}
+- Dificultad: ${APP_CONFIG.difficulties[currentDifficulty]}
+- Criterios DSM-5 actuales
+- Paciente hispanoamericano realista
+
+INSTRUCCIONES:
+Responde SOLO con JSON válido, sin texto adicional, con este formato:
+{
+  "patient": {
+    "name": "Nombre Apellido",
+    "age": número,
+    "gender": "Masculino/Femenino",
+    "occupation": "profesión",
+    "maritalStatus": "estado civil"
+  },
+  "background": "Historia clínica detallada en 2-3 oraciones",
+  "presentingConcerns": ["motivo 1", "síntoma 2", "manifestación 3", "criterio 4", "impacto 5"],
+  "symptoms": ["síntoma 1", "síntoma 2", "síntoma 3", "síntoma 4"],
+  "psychosocialFactors": ["factor 1", "factor 2", "factor 3"],
+  "correctDiagnosis": "Trastorno Específico",
+  "dsm5Code": "F00.0",
+  "feedback": "Explicación educativa detallada",
+  "differentialDiagnosis": ["diagnóstico 1", "diagnóstico 2", "diagnóstico 3"],
+  "category": "${category}"
+}`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+  try {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer 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`
+      },
+      body: JSON.stringify({
+        model: "llama3-8b-8192",
+        messages: [
+          { role: "system", content: "Eres un psicólogo experto. Responde ÚNICAMENTE con JSON válido sin texto adicional." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 800
+      }),
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      const err = await response.text().catch(() => "");
+      throw new Error(`API Error ${response.status}: ${err}`);
     }
 
-    function renderCase() {
-      if (!currentCase) return;
+    const data = await response.json();
 
-      const { patient, background, presentingConcerns, psychosocialFactors } = currentCase;
-      
-      caseContent.innerHTML = `
+    let raw = (data.choices?.[0]?.message?.content || "").trim();
+
+    // 🛠 limpiar si viene con ```json ... ```
+    raw = raw.replace(/```json|```/g, "").trim();
+
+    let caseData;
+    try {
+      caseData = JSON.parse(raw);
+    } catch (e) {
+      throw new Error("La IA no devolvió JSON válido. Respuesta parcial: " + raw.slice(0, 300));
+    }
+
+    caseData.id = `AI_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    caseData.timestamp = new Date().toISOString();
+    caseData.category = caseData.category || category;
+
+    return caseData;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+
+
+    // Get API Key securely
+  async function getAPIKey() {
+  return "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";
+}
+ 
+// generar caso 
+async function generateNewCase() {
+  if (isGenerating) return;
+  isGenerating = true;
+
+  elements.caseContent.innerHTML = `
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <h3>🤖 IA generando caso único...</h3>
+      <p>Creando paciente, síntomas y contexto clínico personalizado</p>
+    </div>
+  `;
+
+  try {
+    currentCase = await generateAICase();
+    displayCase(currentCase);
+  } catch (error) {
+    console.error('Failed to generate case:', error);
+    alert("Error al generar caso: " + error.message); // 👈 aquí verás el error exacto
+  } finally {
+    isGenerating = false;
+  }
+}
+
+ // fin de generar caso
+
+    // Display case
+    function displayCase(caseData) {
+      const symptomsHtml = caseData.symptoms.map(symptom => 
+        `<div class="symptom-tag">
+          <i class="fas fa-check-circle"></i>
+          ${symptom}
+        </div>`
+      ).join('');
+
+      elements.caseContent.innerHTML = `
         <div class="case-content">
           <div class="patient-info">
             <div class="info-item">
-              <i class="fas fa-user info-icon"></i>
-              <span class="info-label">Paciente:</span>
-              <span class="info-value">${patient.name}</span>
+              <div class="info-label"><i class="fas fa-user"></i> Paciente</div>
+              <div class="info-value">${caseData.patient.name}</div>
             </div>
             <div class="info-item">
-              <i class="fas fa-birthday-cake info-icon"></i>
-              <span class="info-label">Edad:</span>
-              <span class="info-value">${patient.age} años</span>
+              <div class="info-label"><i class="fas fa-birthday-cake"></i> Edad</div>
+              <div class="info-value">${caseData.patient.age} años</div>
             </div>
             <div class="info-item">
-              <i class="fas fa-venus-mars info-icon"></i>
-              <span class="info-label">Género:</span>
-              <span class="info-value">${patient.gender}</span>
+              <div class="info-label"><i class="fas fa-venus-mars"></i> Género</div>
+              <div class="info-value">${caseData.patient.gender}</div>
             </div>
             <div class="info-item">
-              <i class="fas fa-briefcase info-icon"></i>
-              <span class="info-label">Ocupación:</span>
-              <span class="info-value">${patient.occupation}</span>
+              <div class="info-label"><i class="fas fa-briefcase"></i> Ocupación</div>
+              <div class="info-value">${caseData.patient.occupation}</div>
             </div>
             <div class="info-item">
-              <i class="fas fa-heart info-icon"></i>
-              <span class="info-label">Estado Civil:</span>
-              <span class="info-value">${patient.maritalStatus}</span>
+              <div class="info-label"><i class="fas fa-heart"></i> Estado Civil</div>
+              <div class="info-value">${caseData.patient.maritalStatus}</div>
             </div>
           </div>
+          
+          <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h4 style="color: var(--text-primary); margin-bottom: 1rem;"><i class="fas fa-file-medical-alt"></i> Historia Clínica</h4>
+            <p style="line-height: 1.6;">${caseData.background}</p>
+            
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-list-ul"></i> Motivos de Consulta</h4>
+            <ul style="margin-left: 1rem;">
+              ${caseData.presentingConcerns.map(concern => `<li style="margin-bottom: 0.5rem;">${concern}</li>`).join('')}
+            </ul>
+            
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-exclamation-circle"></i> Síntomas Identificados</h4>
+            <div class="symptoms-grid">
+              ${symptomsHtml}
+            </div>
+            
+            ${caseData.psychosocialFactors ? `
+            <h4 style="color: var(--text-primary); margin: 1.5rem 0 1rem 0;"><i class="fas fa-users"></i> Factores Psicosociales</h4>
+            <ul style="margin-left: 1rem;">
+              ${caseData.psychosocialFactors.map(factor => `<li style="margin-bottom: 0.5rem;">${factor}</li>`).join('')}
+            </ul>
+            ` : ''}
+          </div>
         </div>
+      `;
 
-        <div class="case-description">
-          <h4><i class="fas fa-file-medical"></i> Historia Clínica</h4>
-          <p>${background}</p>
-        </div>
+      // Clear inputs
+      elements.diagnosisInput.value = '';
+      elements.reasoningInput.value = '';
+      elements.resultArea.innerHTML = '';
+    }
 
-        <div class="case-description">
-          <h4><i class="fas fa-list-ul"></i> Síntomas y Manifestaciones Clínicas</h4>
-          <ul>
-            ${presentingConcerns.map(concern => `<li>${concern}</li>`).join('')}
-          </ul>
-        </div>
-
-        <div class="case-description">
-          <h4><i class="fas fa-users"></i> Factores Psicosociales</h4>
-          <div class="symptoms-grid">
-            ${psychosocialFactors.map(factor => `
-              <div class="symptom-tag">
-                <i class="fas fa-circle"></i>
-                ${factor}
-              </div>
-            `).join('')}
+    // Show error message
+    function showErrorMessage() {
+      elements.caseContent.innerHTML = `
+        <div class="result incorrect">
+          <div class="result-header">
+            <i class="fas fa-exclamation-triangle result-icon"></i>
+            <div>
+              <h4>Error al generar caso</h4>
+              <p>No se pudo conectar con la IA para generar el caso</p>
+            </div>
+          </div>
+          <div class="feedback">
+            <strong>Posibles causas:</strong>
+            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+              <li>Problema de conexión a internet</li>
+              <li>Clave API de OpenAI no configurada</li>
+              <li>Servicio temporalmente no disponible</li>
+            </ul>
+            <p style="margin-top: 1rem;">Intenta nuevamente en unos momentos.</p>
           </div>
         </div>
       `;
     }
 
-    function clearInputs() {
-      diagnosisInput.value = '';
-      reasoningInput.value = '';
-      resultArea.innerHTML = '';
-    }
-
-    // Diagnosis Evaluation
-    function evaluateDiagnosis() {
-      const enteredDiagnosis = diagnosisInput.value.trim();
-      const reasoning = reasoningInput.value.trim();
-
-      if (!enteredDiagnosis) {
-        showAlert('Por favor, ingrese un diagnóstico antes de evaluar.', 'warning');
+    // Evaluate diagnosis
+    async function evaluateDiagnosis() {
+      const diagnosis = elements.diagnosisInput.value.trim();
+      const reasoning = elements.reasoningInput.value.trim();
+      
+      if (!diagnosis) {
+        alert('🔍 Por favor, ingresa un diagnóstico para evaluar');
         return;
       }
 
       if (!currentCase) {
-        showAlert('No hay caso activo para evaluar.', 'danger');
+        alert('⚠️ No hay caso activo para evaluar');
         return;
       }
 
-      const result = evaluateAnswer(enteredDiagnosis, currentCase);
-      displayResult(result);
-      
-      // Add to history
-      addToHistory({
-        date: new Date().toLocaleDateString('es-ES'),
-        patient: currentCase.patient.name,
-        age: currentCase.patient.age,
-        difficulty: currentDifficulty,
-        category: getCategoryName(currentCase.category),
-        enteredDiagnosis,
-        reasoning,
-        correct: result.isCorrect,
-        score: result.score,
-        feedback: result.feedback
-      });
+      elements.resultArea.innerHTML = `
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <h3>🤖 IA evaluando tu diagnóstico...</h3>
+          <p>Analizando respuesta y generando retroalimentación</p>
+        </div>
+      `;
+
+      try {
+        const evaluation = await evaluateWithAI(diagnosis, reasoning);
+        displayEvaluation(evaluation);
+        addToHistory(diagnosis, reasoning, evaluation);
+      } catch (error) {
+        console.error('Evaluation error:', error);
+        const fallbackEval = performBasicEvaluation(diagnosis, reasoning);
+        displayEvaluation(fallbackEval);
+        addToHistory(diagnosis, reasoning, fallbackEval);
+      }
     }
 
-    function evaluateAnswer(entered, caseData) {
-      const correct = caseData.correctDiagnosis.toLowerCase();
-      const enteredLower = entered.toLowerCase();
+    // AI evaluation
+    async function evaluateWithAI(diagnosis, reasoning) {
+      const evaluationPrompt = `Evalúa este diagnóstico psicológico:
+
+CASO:
+- Paciente: ${currentCase.patient.name}, ${currentCase.patient.age} años
+- Síntomas: ${currentCase.symptoms.join(', ')}
+- Historia: ${currentCase.background}
+
+RESPUESTA DEL ESTUDIANTE:
+- Diagnóstico: ${diagnosis}
+- Justificación: ${reasoning || 'No proporcionada'}
+
+DIAGNÓSTICO CORRECTO: ${currentCase.correctDiagnosis} (${currentCase.dsm5Code})
+
+Evalúa y responde SOLO con JSON:
+{
+  "score": número_0_a_100,
+  "accuracy": "correct/partial/incorrect", 
+  "feedback": "Retroalimentación educativa detallada",
+  "strengths": ["fortaleza 1", "fortaleza 2"],
+  "improvements": ["mejora 1", "mejora 2"]
+}`;
+
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer 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`
+        },
+        body: JSON.stringify({
+  model: 'gpt-4o-mini',
+  messages: [
+    {
+      role: 'system',
+      content: 'Eres un psicólogo experto que evalúa diagnósticos educativamente.'
+    },
+    {
+      role: 'user',
+      content: evaluationPrompt
+    }
+  ],
+  response_format: { type: "json_object" },
+  temperature: 0.3,
+  max_tokens: 700
+})
+
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return JSON.parse(data.choices[0].message.content);
+      } else {
+        throw new Error('AI evaluation failed');
+      }
+    }
+
+    // Basic evaluation fallback
+    function performBasicEvaluation(diagnosis, reasoning) {
+      const normalizedDiagnosis = diagnosis.toLowerCase();
+      const normalizedCorrect = currentCase.correctDiagnosis.toLowerCase();
       
-      // Exact match
-      if (enteredLower === correct) {
+      if (normalizedDiagnosis.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedDiagnosis)) {
         return {
-          isCorrect: true,
-          score: 100,
-          type: 'correct',
-          feedback: caseData.feedback
+          score: 90,
+          accuracy: 'correct',
+          feedback: `¡Correcto! ${currentCase.feedback}`,
+          strengths: ['Diagnóstico preciso'],
+          improvements: []
+        };
+      } else {
+        return {
+          score: 25,
+          accuracy: 'incorrect',
+          feedback: `Incorrecto. El diagnóstico correcto es: ${currentCase.correctDiagnosis}. ${currentCase.feedback}`,
+          strengths: reasoning ? ['Intento de justificación'] : [],
+          improvements: ['Revisar criterios DSM-5', 'Analizar síntomas más detalladamente']
         };
       }
-      
-      // Partial matches for related diagnoses
-      const partialMatches = [
-        { terms: ['depresivo', 'depresión'], related: ['trastorno depresivo', 'episodio depresivo'] },
-        { terms: ['ansiedad', 'ansioso'], related: ['trastorno de ansiedad', 'ansiedad generalizada'] },
-        { terms: ['bipolar', 'maníaco'], related: ['trastorno bipolar', 'episodio maníaco'] },
-        { terms: ['esquizofrenia', 'psicótico'], related: ['trastorno psicótico', 'esquizofrenia'] }
-      ];
-
-      for (let match of partialMatches) {
-        if (match.terms.some(term => correct.includes(term) && enteredLower.includes(term))) {
-          return {
-            isCorrect: false,
-            score: 60,
-            type: 'partial',
-            feedback: `Diagnóstico parcialmente correcto. ${caseData.feedback}`
-          };
-        }
-      }
-
-      return {
-        isCorrect: false,
-        score: 0,
-        type: 'incorrect',
-        feedback: caseData.feedback
-      };
     }
 
-    function displayResult(result) {
-      const resultClass = result.type;
-      const icon = result.isCorrect ? 'fa-check-circle' : 
-                   result.type === 'partial' ? 'fa-exclamation-circle' : 'fa-times-circle';
-      
-      const title = result.isCorrect ? 'Diagnóstico Correcto' :
-                    result.type === 'partial' ? 'Diagnóstico Parcialmente Correcto' : 'Diagnóstico Incorrecto';
+    // Display evaluation
+    function displayEvaluation(evaluation) {
+      const resultClass = evaluation.accuracy;
+      const icons = {
+        correct: 'fas fa-check-circle',
+        partial: 'fas fa-exclamation-circle', 
+        incorrect: 'fas fa-times-circle'
+      };
+      const titles = {
+        correct: '✅ Diagnóstico Correcto',
+        partial: '⚠️ Diagnóstico Parcial',
+        incorrect: '❌ Diagnóstico Incorrecto'
+      };
 
-      resultArea.innerHTML = `
+      elements.resultArea.innerHTML = `
         <div class="result ${resultClass}">
-          <i class="fas ${icon} result-icon"></i>
-          <div class="result-content">
-            <h4>${title} (${result.score}/100 puntos)</h4>
-            <p><strong>Diagnóstico esperado:</strong> ${currentCase.correctDiagnosis} (${currentCase.dsm5Code})</p>
-            <div class="feedback">
-              <strong>Retroalimentación clínica:</strong><br>
-              ${result.feedback}
-              ${currentCase.differentialDiagnosis ? `
-                <br><br><strong>Diagnósticos diferenciales a considerar:</strong>
-                <ul>
-                  ${currentCase.differentialDiagnosis.map(dx => `<li>${dx}</li>`).join('')}
-                </ul>
-              ` : ''}
+          <div class="result-header">
+            <i class="${icons[evaluation.accuracy]} result-icon"></i>
+            <div>
+              <h4>${titles[evaluation.accuracy]}</h4>
+              <p><strong>Puntuación:</strong> ${evaluation.score}%</p>
+              <p><strong>Diagnóstico correcto:</strong> ${currentCase.correctDiagnosis} (${currentCase.dsm5Code})</p>
             </div>
+          </div>
+          
+          <div class="feedback">
+            <strong>💡 Retroalimentación:</strong><br>
+            ${evaluation.feedback}
+            
+            ${evaluation.strengths.length > 0 ? `
+            <br><br><strong>✅ Fortalezas:</strong>
+            <ul style="margin-left: 1rem;">
+              ${evaluation.strengths.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+            ` : ''}
+            
+            ${evaluation.improvements.length > 0 ? `
+            <br><strong>📈 Áreas de mejora:</strong>
+            <ul style="margin-left: 1rem;">
+              ${evaluation.improvements.map(i => `<li>${i}</li>`).join('')}
+            </ul>
+            ` : ''}
+            
+            ${currentCase.differentialDiagnosis ? `
+            <br><strong>🔍 Diagnósticos diferenciales:</strong>
+            <ul style="margin-left: 1rem;">
+              ${currentCase.differentialDiagnosis.map(d => `<li>${d}</li>`).join('')}
+            </ul>
+            ` : ''}
           </div>
         </div>
       `;
     }
 
-    // History Management
-    function addToHistory(entry) {
+    // Add to history
+    function addToHistory(diagnosis, reasoning, evaluation) {
       historyCount++;
-      entry.id = historyCount;
-      caseHistory.unshift(entry);
+      const date = new Date().toLocaleDateString('es-ES');
       
-      // Keep only last 50 entries
-      if (caseHistory.length > 50) {
-        caseHistory = caseHistory.slice(0, 50);
-      }
-      
-      localStorage.setItem('psychologySimHistory', JSON.stringify(caseHistory));
-      renderHistory();
-    }
-
-    function renderHistory() {
-      if (caseHistory.length === 0) {
-        historyTableBody.innerHTML = `
-          <tr>
-            <td colspan="9" style="text-align: center; color: var(--gray-500); padding: 2rem;">
-              <i class="fas fa-clipboard-list" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
-              No hay casos evaluados aún. ¡Comienza evaluando tu primer caso!
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      historyTableBody.innerHTML = caseHistory.map((entry, index) => `
-        <tr>
-          <td data-label="#">${entry.id}</td>
-          <td data-label="Fecha">${entry.date}</td>
-          <td data-label="Paciente">${entry.patient}</td>
-          <td data-label="Edad">${entry.age}</td>
-          <td data-label="Dificultad">
-            <span class="difficulty-badge difficulty-${entry.difficulty}">
-              ${getDifficultyLabel(entry.difficulty)}
-            </span>
-          </td>
-          <td data-label="Categoría">${entry.category}</td>
-          <td data-label="Diagnóstico">${entry.enteredDiagnosis}</td>
-          <td data-label="Resultado">
-            <span class="status-badge ${entry.correct ? 'status-correct' : entry.score > 50 ? 'status-partial' : 'status-incorrect'}">
-              <i class="fas ${entry.correct ? 'fa-check' : entry.score > 50 ? 'fa-exclamation' : 'fa-times'}"></i>
-              ${entry.correct ? 'Correcto' : entry.score > 50 ? 'Parcial' : 'Incorrecto'}
-            </span>
-          </td>
-          <td data-label="Puntuación">${entry.score}/100</td>
-        </tr>
-      `).join('');
-    }
-
-    // Utility Functions
-    function getCategoryName(category) {
-      const categories = {
-        mood: 'Trastornos del Estado de Ánimo',
-        anxiety: 'Trastornos de Ansiedad',
-        psychotic: 'Trastornos Psicóticos',
-        personality: 'Trastornos de Personalidad',
-        substance: 'Trastornos por Uso de Sustancias',
-        eating: 'Trastornos de la Conducta Alimentaria'
+      const statusBadges = {
+        correct: '<span class="status-badge status-correct">✅ Correcto</span>',
+        partial: '<span class="status-badge status-partial">⚠️ Parcial</span>',
+        incorrect: '<span class="status-badge status-incorrect">❌ Incorrecto</span>'
       };
-      return categories[category] || category;
-    }
 
-    function getDifficultyLabel(difficulty) {
-      const labels = {
-        beginner: 'Principiante',
-        intermediate: 'Intermedio',
-        advanced: 'Avanzado'
-      };
-      return labels[difficulty] || difficulty;
-    }
-
-    function showAlert(message, type = 'info') {
-      const alertDiv = document.createElement('div');
-      alertDiv.className = `result ${type}`;
-      alertDiv.innerHTML = `
-        <i class="fas fa-info-circle result-icon"></i>
-        <div class="result-content">
-          <p>${message}</p>
-        </div>
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${historyCount}</td>
+        <td>${date}</td>
+        <td>${currentCase.patient.name}</td>
+        <td>${APP_CONFIG.categories[currentCase.category]}</td>
+        <td>${diagnosis}</td>
+        <td>${statusBadges[evaluation.accuracy]}</td>
+        <td><strong>${evaluation.score}%</strong></td>
       `;
       
-      resultArea.innerHTML = '';
-      resultArea.appendChild(alertDiv);
-      
-      setTimeout(() => {
-        alertDiv.remove();
-      }, 5000);
+      elements.historyTableBody.insertBefore(row, elements.historyTableBody.firstChild);
     }
 
+    // Export history
     function exportHistory() {
-      if (caseHistory.length === 0) {
-        showAlert('No hay historial para exportar.', 'warning');
+      const rows = Array.from(elements.historyTableBody.querySelectorAll('tr'));
+      if (rows.length === 0) {
+        alert('📊 No hay historial para exportar');
         return;
       }
+      
+      let csv = 'Caso,Fecha,Paciente,Categoría,Diagnóstico,Resultado,Puntuación\n';
+      
+      rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll('td'));
+        const data = cells.map(cell => {
+          let text = cell.textContent.trim();
+          return text.includes(',') ? `"${text}"` : text;
+        });
+        csv += data.join(',') + '\n';
+      });
 
-      const csvContent = [
-        ['ID', 'Fecha', 'Paciente', 'Edad', 'Dificultad', 'Categoría', 'Diagnóstico Ingresado', 'Correcto', 'Puntuación', 'Razonamiento'].join(','),
-        ...caseHistory.map(entry => [
-          entry.id,
-          entry.date,
-          `"${entry.patient}"`,
-          entry.age,
-          entry.difficulty,
-          `"${entry.category}"`,
-          `"${entry.enteredDiagnosis}"`,
-          entry.correct ? 'Sí' : 'No',
-          entry.score,
-          `"${entry.reasoning || 'No proporcionado'}"`
-        ].join(','))
-      ].join('\n');
-
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `historial_casos_psicologia_${new Date().toISOString().split('T')[0]}.csv`);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
+      link.href = URL.createObjectURL(blob);
+      link.download = `historial_casos_${new Date().toISOString().split('T')[0]}.csv`;
       link.click();
-      document.body.removeChild(link);
-
-      showAlert('Historial exportado exitosamente.', 'success');
     }
 
-    // Initialize Application
-    function init() {
-      renderHistory();
-      generateNewCase();
-    }
-
-    // Start the application
-    init();
+    // Initialize app
+    console.log('🚀 Simulador IA Psicológico inicializado');
+    generateNewCase();
   </script>
 </body>
-
 </html>
-
-
